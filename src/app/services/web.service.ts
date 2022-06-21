@@ -9,7 +9,9 @@ export class WebService {
   uniqueID = ""
   hostURL = environment.host
   jobCompleted: boolean = false
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    console.log(this.hostURL)
+  }
 
   getUniqueID() {
     this.http.get(this.hostURL, {responseType: "text", observe: "body"}).subscribe(data => {
