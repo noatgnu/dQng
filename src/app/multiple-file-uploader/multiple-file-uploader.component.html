@@ -1,0 +1,50 @@
+<input type="file" class="form-control" webkitDirectory #folderSelection (change)="processFolder(folderSelection.files)">
+
+<div class="card mt-2" *ngIf="fileList.length>0">
+  <div class="card-body">
+    <ng-container *ngFor="let f of files">
+      <div class="row" *ngIf="progress[f]>0">
+        <div class="col-2">
+          {{f}}
+        </div>
+        <div class="col-10">
+          <ngb-progressbar type="info" [value]="progress[f]" [animated]="true" [striped]="true">
+            <span *ngIf="progress[f]===100">Completed</span>
+          </ngb-progressbar>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<button class="btn btn-primary mt-2" (click)="performAnalysis()">Perform Analysis</button>
+
+<div class="card mt-2">
+  <div class="card-body">
+    <h5 class="card-title">Job {{web.uniqueID}} {{job_status}}</h5>
+    <table class="table table-striped" *ngIf="analysisProgress.length > 0">
+      <thead>
+      <tr>
+        <th scope="col">
+          Time
+        </th>
+        <th scope="col">
+          Task
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let r of analysisProgress">
+        <td>
+          {{r.time}}
+        </td>
+        <td>
+          {{r.task}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

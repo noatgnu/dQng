@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-lex flex-wrap">
+  <div class="container-fluid">
+    <b style="padding-left: 4px" class="text-dark"><a class="navbar-brand" href="#">dQ</a></b>
+    <ng-container>
+      <div class="d-flex">
+        <div class="p-2">
+          <span class="badge badge-primary" *ngIf="timer.timer.currentHMS !==''">{{timer.timer.currentHMS}}</span>
+        </div>
+        <div class="p-2" *ngIf="web.jobCompleted">
+          <a class="btn btn-primary" href="{{web.hostURL}}/api/download/{{web.uniqueID}}/">Download</a>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</nav>
