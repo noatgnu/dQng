@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
 })
 export class WebService {
   uniqueID = ""
-  hostURL = environment.host + ":8000"
+  hostURL = environment.host
   jobCompleted: boolean = false
   constructor(private http: HttpClient) { }
 

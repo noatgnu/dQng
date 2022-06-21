@@ -4,7 +4,7 @@
     <ng-container>
       <div class="d-flex">
         <div class="p-2">
-          <span class="badge badge-primary" *ngIf="timer.timer.currentHMS !==''">{{timer.timer.currentHMS}}</span>
+          <span class="badge bg-primary" *ngIf="timer.timer.currentTime !== 0">{{timer.timer.currentHMS}}</span>
         </div>
         <div class="p-2" *ngIf="web.jobCompleted">
           <a class="btn btn-primary" href="{{web.hostURL}}/api/download/{{web.uniqueID}}/">Download</a>
