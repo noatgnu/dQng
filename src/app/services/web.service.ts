@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebService {
   uniqueID = ""
-  hostURL = "http://dq.muttsu.com"
+  hostURL = environment.host
   jobCompleted: boolean = false
   constructor(private http: HttpClient) { }
 

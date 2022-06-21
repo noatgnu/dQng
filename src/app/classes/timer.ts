@@ -1,17 +1,19 @@
+import { interval } from "rxjs/internal/observable/interval"
+
 export class Timer {
   currentTime = 0
   interval: any
   currentHMS = ""
   start() {
-    this.interval = setInterval(() => {
-      this.currentTime ++
+    this.interval = interval(1000).subscribe(value => {
+      this.currentTime = value
       this.currentHMS = this.convertToHMS()
-    }, 1000)
+    })
   }
 
   pause() {
     if (this.interval) {
-      clearInterval(this.interval)
+      this.interval.unsubscribe()
     }
   }
 
