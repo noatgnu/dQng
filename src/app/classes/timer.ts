@@ -5,6 +5,9 @@ export class Timer {
   interval: any
   currentHMS = ""
   start() {
+    if (this.interval) {
+      this.interval.unsubscribe()
+    }
     this.interval = interval(1000).subscribe(value => {
       this.currentTime = value
       this.currentHMS = this.convertToHMS()

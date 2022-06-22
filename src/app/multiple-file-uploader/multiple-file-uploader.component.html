@@ -1,4 +1,17 @@
-<input type="file" class="form-control" webkitDirectory #folderSelection (change)="processFolder(folderSelection.files)">
+<div class="input-group">
+  <input id="diannFolder" type="file" class="form-control" webkitDirectory #folderSelection (change)="processFolder(folderSelection.files)">
+  <label for="diannFolder" class="input-group-text">DIANN Output Folder</label>
+</div>
+
+<div class=" mt-2">
+  <input id="fastaFile" type="file" class="form-control" #fasta (change)="processSingle(fasta.files, 'fasta')">
+  <label for="fastaFile" class="input-group-text">Fasta Library</label>
+</div>
+
+<div class=" mt-2">
+  <input id="gafFile" type="file" class="form-control" #gaf (change)="processSingle(gaf.files, 'gaf')">
+  <label for="gafFile" class="input-group-text">GAF File</label>
+</div>
 
 <div class="card mt-2" *ngIf="fileList.length>0">
   <div class="card-body">
@@ -16,6 +29,11 @@
     </ng-container>
   </div>
 </div>
+
+
+
+
+
 
 <button class="btn btn-primary mt-2" (click)="performAnalysis()">Perform Analysis</button>
 

@@ -16,6 +16,10 @@ export class MultipleFileUploaderComponent implements OnInit {
   fileList: any[] = []
   analysisProgress: any[] = []
   job_status: string = ""
+  extra_files: any = {
+    "fasta": "",
+    "gaf": ""
+  }
   constructor(public web: WebService, private timer: TimerService) {
     this.web.getUniqueID()
   }
@@ -41,10 +45,25 @@ export class MultipleFileUploaderComponent implements OnInit {
     }
   }
 
+  processSingle(files: any, type: string) {
+    if (files.length >0) {
+      const f = files[0]
+      this.progress[f.name] = 0
+      this.extra_files[type] = f.name
+      const resp = this.web.uploadFile(f)
+      resp.subscribe(ev => {
+        if (ev.type == HttpEventType.UploadProgress) {
+          // @ts-ignore
+          this.progress[f.name] = Math.round(100 * (ev.loaded / ev.total));
+        }
+      })
+    }
+  }
+
   performAnalysis() {
     this.web.jobCompleted = false
     this.timer.timer.start()
-    this.web.performAnalysis().subscribe(res => {
+    this.web.performAnalysis(this.extra_files).subscribe(res => {
       const poll = interval(30000).pipe(
         startWith(0),
         switchMap(() => this.web.getStatus()), retryWhen((errors) => errors.pipe(
@@ -52,7 +71,6 @@ export class MultipleFileUploaderComponent implements OnInit {
         )
         ).subscribe(res => {
         const status = res.headers.get("Job-Status")
-        console.log(status)
         if (status) {
           this.job_status = status
         }

@@ -36,8 +36,8 @@ export class WebService {
     )
   }
 
-  performAnalysis() {
-    return this.http.get(this.hostURL + `/api/diann/${this.uniqueID}/`, {responseType: "text", observe: "body"})
+  performAnalysis(extra_files: any) {
+    return this.http.get(this.hostURL + `/api/diann/${this.uniqueID}/fasta/${extra_files["fasta"]}/gaf/${extra_files["gaf"]}/`, {responseType: "text", observe: "body"})
   }
 
   getStatus() {
