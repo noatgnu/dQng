@@ -16,11 +16,14 @@ export class MultipleFileUploaderComponent implements OnInit {
   fileList: any[] = []
   analysisProgress: any[] = []
   job_status: string = ""
-  extra: string[] = ["fasta", "gaf"]
+  extra: string[] = ["fasta", "gaf", "obo"]
   extra_files: any = {
     "fasta": "",
-    "gaf": ""
+    "gaf": "",
+    "obo": ""
   }
+
+  started: boolean = false
   constructor(public web: WebService, private timer: TimerService) {
     this.web.getUniqueID()
   }
@@ -29,9 +32,9 @@ export class MultipleFileUploaderComponent implements OnInit {
   }
 
   processFolder(files: any){
-    this.fileList = files
     if (files.length > 0) {
       for (const f of files) {
+        this.fileList.push(f)
         if (this.files.includes(f.name)) {
           this.progress[f.name] = 0
           const resp = this.web.uploadFile(f)
@@ -47,7 +50,6 @@ export class MultipleFileUploaderComponent implements OnInit {
   }
 
   processSingle(files: any, type: string) {
-    console.log(files)
     if (files.length >0) {
       const f = files[0]
       this.fileList.push(f)
@@ -56,7 +58,6 @@ export class MultipleFileUploaderComponent implements OnInit {
       const resp = this.web.uploadFile(f)
       resp.subscribe(ev => {
         if (ev.type == HttpEventType.UploadProgress) {
-          console.log(ev)
           // @ts-ignore
           this.progress[f.name] = Math.round(100 * (ev.loaded / ev.total));
         }
@@ -65,6 +66,7 @@ export class MultipleFileUploaderComponent implements OnInit {
   }
 
   performAnalysis() {
+    this.started = true
     this.web.jobCompleted = false
     this.timer.timer.start()
     this.web.performAnalysis(this.extra_files).subscribe(res => {
@@ -94,7 +96,6 @@ export class MultipleFileUploaderComponent implements OnInit {
             this.timer.timer.pause()
             if (status === "finished") {
               this.web.jobCompleted = true
-
             }
             poll.unsubscribe()
           }

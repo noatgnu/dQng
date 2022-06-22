@@ -14,6 +14,11 @@
       <input id="gafFile" type="file" class="form-control" #gaf (change)="processSingle(gaf.files, 'gaf')">
       <label for="gafFile" class="input-group-text">GAF File</label>
     </div>
+
+    <div class="input-group mt-2">
+      <input id="oboFile" type="file" class="form-control" #obo (change)="processSingle(obo.files, 'obo')">
+      <label for="oboFile" class="input-group-text">OBO File</label>
+    </div>
   </div>
 </div>
 
@@ -47,7 +52,7 @@
   </div>
 </div>
 
-<button class="btn btn-primary mt-2" (click)="performAnalysis()" [disabled]="web.jobCompleted === false">Perform Analysis</button>
+<button class="btn btn-primary mt-2" (click)="performAnalysis()">Perform Analysis</button>
 
 <div class="card mt-2">
   <div class="card-body">
@@ -63,7 +68,6 @@
         </th>
       </tr>
       </thead>
-
       <tbody>
       <tr *ngFor="let r of analysisProgress">
         <td>
