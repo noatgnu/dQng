@@ -1,17 +1,22 @@
-<div class="input-group">
-  <input id="diannFolder" type="file" class="form-control" webkitDirectory #folderSelection (change)="processFolder(folderSelection.files)">
-  <label for="diannFolder" class="input-group-text">DIANN Output Folder</label>
+<div class="card">
+  <div class="card-body">
+    <div class="input-group">
+      <input id="diannFolder" type="file" class="form-control" webkitDirectory #folderSelection (change)="processFolder(folderSelection.files)">
+      <label for="diannFolder" class="input-group-text">DIANN Output Folder</label>
+    </div>
+
+    <div class="input-group mt-2">
+      <input id="fastaFile" type="file" class="form-control" #fasta (change)="processSingle(fasta.files, 'fasta')">
+      <label for="fastaFile" class="input-group-text">Fasta Library</label>
+    </div>
+
+    <div class="input-group mt-2">
+      <input id="gafFile" type="file" class="form-control" #gaf (change)="processSingle(gaf.files, 'gaf')">
+      <label for="gafFile" class="input-group-text">GAF File</label>
+    </div>
+  </div>
 </div>
 
-<div class=" mt-2">
-  <input id="fastaFile" type="file" class="form-control" #fasta (change)="processSingle(fasta.files, 'fasta')">
-  <label for="fastaFile" class="input-group-text">Fasta Library</label>
-</div>
-
-<div class=" mt-2">
-  <input id="gafFile" type="file" class="form-control" #gaf (change)="processSingle(gaf.files, 'gaf')">
-  <label for="gafFile" class="input-group-text">GAF File</label>
-</div>
 
 <div class="card mt-2" *ngIf="fileList.length>0">
   <div class="card-body">
@@ -27,15 +32,22 @@
         </div>
       </div>
     </ng-container>
+    <ng-container *ngFor="let f of extra">
+      <div class="row" *ngIf="progress[extra_files[f]]>0">
+        <div class="col-2">
+          {{f}}
+        </div>
+        <div class="col-10">
+          <ngb-progressbar type="info" [value]="progress[extra_files[f]]" [animated]="true" [striped]="true">
+            <span *ngIf="progress[extra_files[f]]===100">Completed</span>
+          </ngb-progressbar>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
 
-
-
-
-
-
-<button class="btn btn-primary mt-2" (click)="performAnalysis()">Perform Analysis</button>
+<button class="btn btn-primary mt-2" (click)="performAnalysis()" [disabled]="web.jobCompleted === false">Perform Analysis</button>
 
 <div class="card mt-2">
   <div class="card-body">

@@ -16,6 +16,7 @@ export class MultipleFileUploaderComponent implements OnInit {
   fileList: any[] = []
   analysisProgress: any[] = []
   job_status: string = ""
+  extra: string[] = ["fasta", "gaf"]
   extra_files: any = {
     "fasta": "",
     "gaf": ""
@@ -46,13 +47,16 @@ export class MultipleFileUploaderComponent implements OnInit {
   }
 
   processSingle(files: any, type: string) {
+    console.log(files)
     if (files.length >0) {
       const f = files[0]
+      this.fileList.push(f)
       this.progress[f.name] = 0
       this.extra_files[type] = f.name
       const resp = this.web.uploadFile(f)
       resp.subscribe(ev => {
         if (ev.type == HttpEventType.UploadProgress) {
+          console.log(ev)
           // @ts-ignore
           this.progress[f.name] = Math.round(100 * (ev.loaded / ev.total));
         }
