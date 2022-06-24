@@ -40,7 +40,12 @@ export class WebService {
     return this.http.get(this.hostURL + `/api/diann/${this.uniqueID}/fasta/${extra_files["fasta"]}/gaf/${extra_files["gaf"]}/obo/${extra_files["obo"]}/`, {responseType: "text", observe: "body"})
   }
 
+  performAnalysisPost(extra_files: any) {
+    return this.http.post(this.hostURL + `/api/diann/`, {uniqueID: this.uniqueID, fasta: extra_files["fasta"], gaf: extra_files["gaf"], obo: extra_files["obo"]},{responseType: "text", observe: "body"})
+  }
+
   getStatus() {
     return this.http.get(this.hostURL + `/api/status/${this.uniqueID}/`, {responseType: "text", observe: "response"})
   }
+
 }

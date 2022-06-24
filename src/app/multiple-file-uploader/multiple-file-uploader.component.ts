@@ -69,7 +69,7 @@ export class MultipleFileUploaderComponent implements OnInit {
     this.started = true
     this.web.jobCompleted = false
     this.timer.timer.start()
-    this.web.performAnalysis(this.extra_files).subscribe(res => {
+    this.web.performAnalysisPost(this.extra_files).subscribe(res => {
       const poll = interval(30000).pipe(
         startWith(0),
         switchMap(() => this.web.getStatus()), retryWhen((errors) => errors.pipe(
