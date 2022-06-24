@@ -5,12 +5,15 @@ export class Timer {
   interval: any
   currentHMS = ""
   start() {
+
     if (this.interval) {
       this.interval.unsubscribe()
     }
+    this.currentTime = Date.now()
     this.interval = interval(1000).subscribe(value => {
-      this.currentTime = value
-      this.currentHMS = this.convertToHMS()
+      const time = Date.now()
+      const delta = time - this.currentTime
+      this.currentHMS = this.convertToHMS(delta)
     })
   }
 
@@ -24,7 +27,7 @@ export class Timer {
     this.currentTime = 0
   }
 
-  convertToHMS() {
-    return new Date(this.currentTime * 1000).toISOString().substr(11, 8)
+  convertToHMS(time: number) {
+    return new Date(time).toISOString().slice(11, 11+8)
   }
 }
